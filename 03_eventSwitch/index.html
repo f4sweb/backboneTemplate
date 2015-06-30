@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="utf-8">
+	<title>SimpleModel</title>
+	<link rel="stylesheet" href="../_css/common.css">
+</head>
+<body>
+
+
+	<h1>eventsの分岐</h1>
+
+	<!-- コンテンツエリア -->
+	<h2>コンテンツ</h2>
+	<div id="btnWrap">
+		<a href="#/simplePage" class="btn">simplePage</a>
+	</div>
+
+	<div id="contents">
+
+	</div>
+
+	<h2>eventsの分岐にドはまりした件</h2>
+	<p>viewの登録時にeventsを一緒に登録するわけですが、そこにお馴染みの「cgti」が設定出来なくて超苦しんだ挙句、実装できませんでした。<br>
+	なのでもう一度トライ。<br>
+	具体的には下記の部分。
+	</p>
+	<code>
+		<span class="fileName">simplaeView.js</span>
+		events:{<br>
+		　	"touchend":"touchHandler"<br>
+		},<br>
+		touchHandler : function(){<br>
+		　	console.log("たっち");<br>
+		},
+	</code>
+	<p>「touchend」をユーザーエージェントごとに切り替えたい<br>
+	cgti:"touchHandler"<br>
+	とかやっても全然だめでした。</p>
+
+
+
+	<script src="/lib/require.js" data-main="_js/main.js"></script>
+
+</body>
+</html>

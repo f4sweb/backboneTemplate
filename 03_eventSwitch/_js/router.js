@@ -27,8 +27,7 @@ define([
 
 		routes: {
 			"": 			"page01",
-			'page01(:query)': 	'page01',
-			'page02(:query)': 	'page02'
+			'page01(:query)': 	'page01'
 		},
 		//ルーティングの前
 		before: function () {
@@ -42,12 +41,6 @@ define([
 		page01: function () {
 			pageURL = "_json/test.json";
 			pageTemp = page01Temp;
-			pageInstance = simplaeView;
-		},
-		page02: function () {
-			pageURL = "_json/test2.json";
-			pageTemp = page02Temp;
-
 			pageInstance = simplaeView;
 		}
 	});

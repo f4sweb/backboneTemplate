@@ -24,6 +24,12 @@ define([
 				}
 			})
 		},
+		events:{
+			"touchend":"touchHandler"
+		},
+		touchHandler : function(){
+			console.log("たっち");
+		},
 		render : function() {
 			this.$el.html(this.template({model:this.model.toJSON()}));
 			return this;

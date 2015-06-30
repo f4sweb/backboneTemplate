@@ -37,7 +37,7 @@
 
 	<!-- ################################## -->
 	<h2>初期json読み込みのtemplateの使い方とイベントの登録について</h2>
-	<p>先の「02_01_challengePage」では、temp02に全てのタグをいれておりましたが、「li」を外し、「listTemp」部分を別途組み込む用にしました。</p>
+	<p>先の「02_01_challengePage」では、temp02に全てのタグをいれてましたが、「li」を外し、「listTemp」部分を別途組み込む用にしました。</p>
 
 	<code>
 		<span class="fileName">temp02.html</span>
@@ -47,23 +47,36 @@
 	</code>
 
 
-	それによってonFecth内のview登録は下記のように変更となります。
+	それによってonFecth内のview登録は下記のように変更となります。一度にdom追加したくて、「createDocumentFragment」を２回使用しています。
 	<code>
 		<span class="fileName">challengeView.js</span>
-		listCollection = new ListCollection(resp.list);<br>
-		var flgmntNode = document.createDocumentFragment();<br>
+		//フラグメントその１
+		var flgmntNode01 = document.createDocumentFragment();<br>
+		flgmntNode01.appendChild(this.render().el);<br><br>
+		listCollection = new ListCollection(resp.list);<br><br>
+		//フラグメントその２<br>
+		var flgmntNode02 = document.createDocumentFragment();<br>
 		listCollection.each(function(model,index){<br>
 		　	var listView = new ListView({<br>
 		　　		model:model<br>
 		　	});<br>
-		　	flgmntNode.appendChild(listView.render().el);<br>
-		});<br>
-		$("#contents").append(flgmntNode);
+		　	flgmntNode02.appendChild(listView.render().el);<br>
+		});<br><br>
+		flgmntNode01.getElementById("listWrap").appendChild(flgmntNode02);<br><br>
+		//最後にコンテンツ追加<br>
+		document.getElementById("contents").appendChild(flgmntNode01);
 	</code>
 
 	<!-- ################################## -->
 	<h2>elの要素を特に指定しないと、templateの要素にdivタグがラップされる件</h2>
 	<p>上記リストテンプレートをappendする際に、elを特に指定していないと、下記ようにappendされます。</p>
+	<code>
+		<span class="fileName">listTemp.html</span>
+		&lt;li&gt;...&lt;/li&gt;<br>
+		&lt;li&gt;...&lt;/li&gt;<br>
+		&lt;li&gt;...&lt;/li&gt;<br>
+		&lt;li&gt;...&lt;/li&gt;<br>
+	</code>
 	<code>
 		<span class="fileName">index.html</span>
 		&lt;ul id="listWrap"&gt;<br>
@@ -75,12 +88,25 @@
 	</code>
 	<p>だのでテンプレートからliを削除して、tagNameにliをしてします。</p>
 	<code>
+		<span class="fileName">listTemp.html</span>
+		&lt;span&gt;...&lt;/span&gt;<br>
+		&lt;span&gt;...&lt;/span&gt;<br>
+
+	</code>
+	<code>
 		<span class="fileName">challengeView.js</span>
-		var ListView = Backbone.View.extend({
+		var ListView = Backbone.View.extend({<br>
 		　tagName:"li",
 	</code>
 
+	<p>この方法がいいやら悪いやら、わかりません。</p>
 
+
+	<!-- ################################## -->
+	<h2>で、「02_01_challengePage」「02_02_challengePage」どっちを選択すべき？</h2>
+	<p>02_01_challengePageの方が楽な気がするけど、elの登録がキモい。<br>
+	02_02_challengePageは正攻法な気もするけどcreateDocumentFragmentがめんどいようにも思える<br>
+	結果わかりません。</p>
 
 
 

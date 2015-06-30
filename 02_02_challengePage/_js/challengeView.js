@@ -39,7 +39,6 @@ define([
 	})
 
 
-
 	//################################
 	//初回Model、View
 	//################################
@@ -70,19 +69,24 @@ define([
 			return this;
 		},
 		onFetch : function(collection, resp) {
-			$("#contents").append(this.render().el);
+			//フラグメントその１
+			var flgmntNode01 = document.createDocumentFragment();
+			flgmntNode01.appendChild(this.render().el);
 
 			listCollection = new ListCollection(resp.list);
-			var flgmntNode = document.createDocumentFragment();
+			//フラグメントその２
+			var flgmntNode02 = document.createDocumentFragment();
 			listCollection.each(function(model,index){
 				var listView = new ListView({
-					model:model,
-
+					model:model
 				});
-				flgmntNode.appendChild(listView.render().el);
+				flgmntNode02.appendChild(listView.render().el);
 			});
 
-			$("#listWrap").append(flgmntNode);
+			flgmntNode01.getElementById("listWrap").appendChild(flgmntNode02);
+
+			//最後にコンテンツ追加
+			document.getElementById("contents").appendChild(flgmntNode01);
 		}
 	});
 	var pageView;
