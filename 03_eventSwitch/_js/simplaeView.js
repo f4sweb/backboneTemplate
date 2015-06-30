@@ -3,6 +3,37 @@ define([
 	'backbone'
 ], function (_,Backbone) {
 
+	var uaMatch = function () {
+		const ua = navigator.userAgent.toLowerCase();
+		for (var i = 0; i < arguments.length; i++) {
+			if (ua.match(arguments[i])) {
+				return true;
+			}
+		}
+		return false;
+	};
+	const ua = {
+		ios: uaMatch('ipad', 'iphone', 'ipod'),
+		ios6: uaMatch('iphone os 6_'),
+		ipad: uaMatch('ipad'),
+		ipod: uaMatch('ipod'),
+		android: uaMatch('android'),
+		isGalaxys2: uaMatch('isw11sc', 'sc-02c', 'sc-03d'),
+		isGalaxys3: uaMatch('sc-03e', 'sc-06d', 'scl21'),
+		isGalaxys3a: uaMatch('sc-03e')
+	};
+	ua.isGalaxys2 = true;
+
+	const cgti = (function () { // commonGetTouchId. 端末によって効き具合が異なる.
+		if (!ua.ios && !ua.android) {
+			return 'click'; // pc browser.
+
+		} else if (ua.isGalaxys2 || ua.isGalaxys3) {
+			return 'click'; // !touchend.
+		}
+
+		return 'touchend'; // default. iOS=!click.
+	})();
 
 	var pageTemplate;
 	var PageModel = Backbone.Model.extend({});
@@ -23,9 +54,13 @@ define([
 					console.log(options);
 				}
 			})
+
+
 		},
-		events:{
-			"touchend":"touchHandler"
+		events:function(){
+			var obj = {}
+			obj[cgti] = "touchHandler";
+			return obj;
 		},
 		touchHandler : function(){
 			console.log("たっち");

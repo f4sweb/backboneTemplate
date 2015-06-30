@@ -36,7 +36,23 @@
 	</code>
 	<p>「touchend」をユーザーエージェントごとに切り替えたい<br>
 	cgti:"touchHandler"<br>
-	とかやっても全然だめでした。</p>
+	とかやっても全然だめでした。<br><br>
+	下記で行けたかも
+	</p>
+
+	<code>
+		<span class="fileName">simplaeView.js</span>
+		events:function(){<br>
+		　	var obj = {}<br>
+		　	obj[cgti] = "touchHandler";<br>
+		　	return obj;<br>
+		},<br>
+		touchHandler : function(){<br>
+		　	console.log("たっち");<br>
+		},
+	</code>
+
+	<p>あっけなさすぎる。あんな出来なかったのに。。。</p>
 
 
 

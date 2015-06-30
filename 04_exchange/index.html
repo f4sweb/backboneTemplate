@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="utf-8">
+	<title>SimpleModel</title>
+	<link rel="stylesheet" href="../_css/common.css">
+</head>
+<body>
+
+
+	<h1>exchange</h1>
+
+	<div id="btnWrap">
+		<a href="#/page01" class="btn">シンプルページ</a>
+		<a href="#/page02" class="btn">交換所</a>
+	</div>
+
+	<div id="contents">
+
+	</div>
+
+
+	<h2>想定しているページ</h2>
+	<p>イベントの交換所を想定してます。<br>
+	交換制限があり、一つ交換すると、使用したアイテムが減り、全てのボタンアクティブに影響を与えるページをイメージしています。</p>
+
+
+	<code>
+		<span class="fileName">simpleView.js</span>
+		start : function(url,temp){<br>
+			　pageModel.url = url;<br>
+			　pageTemplate = temp;<br>
+			　<br>
+			　pageView = new PageView();<br>
+		},
+	</code>
+
+	<script src="/lib/require.js" data-main="_js/main.js"></script>
+
+</body>
+</html>
