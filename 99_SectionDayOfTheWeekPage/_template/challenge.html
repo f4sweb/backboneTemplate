@@ -1,0 +1,9 @@
+<h3>チャレンジクエスト</h3>
+<ul>
+	<% _.each(model.list, function(item) { %>
+	<li>
+		<p><%= item.level %></p>
+		<p><%= item.title %></p>
+	</li>
+	<% }) %>
+</ul>

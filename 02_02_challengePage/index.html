@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="utf-8">
+	<title>challengePage</title>
+	<link rel="stylesheet" href="../_css/common.css">
+	<style type="text/css">
+	.itemName{
+		display: inline-block;
+		width:200px;
+		padding:30px 0;
+	}
+	</style>
+</head>
+<body>
+
+
+	<h1>challengePage</h1>
+
+
+	<!-- コンテンツエリア -->
+	<h2>コンテンツ</h2>
+	<div id="btnWrap">
+		<a href="#/simplePage" class="btn">simplePage</a>
+		<a href="#/challengePage" class="btn">challengePage</a>
+	</div>
+
+	<div id="contents">
+
+	</div>
+
+
+	<!-- ################################## -->
+	<h2>想定しているページ</h2>
+	<p>先の「02_01_challengePage」と同様です。違いは初期jsonロード時のテンプレートレンダリングです。</p>
+
+
+	<!-- ################################## -->
+	<h2>初期json読み込みのtemplateの使い方とイベントの登録について</h2>
+	<p>先の「02_01_challengePage」では、temp02に全てのタグをいれておりましたが、「li」を外し、「listTemp」部分を別途組み込む用にしました。</p>
+
+	<code>
+		<span class="fileName">temp02.html</span>
+		&lt;h3&gt;&lt;%= model.title %&gt;&lt;/h3&gt;<br>
+		&lt;ul id="listWrap"&gt;<br>
+		&lt;/ul&gt;<br>
+	</code>
+
+
+	それによってonFecth内のview登録は下記のように変更となります。
+	<code>
+		<span class="fileName">challengeView.js</span>
+		listCollection = new ListCollection(resp.list);<br>
+		var flgmntNode = document.createDocumentFragment();<br>
+		listCollection.each(function(model,index){<br>
+		　	var listView = new ListView({<br>
+		　　		model:model<br>
+		　	});<br>
+		　	flgmntNode.appendChild(listView.render().el);<br>
+		});<br>
+		$("#contents").append(flgmntNode);
+	</code>
+
+	<!-- ################################## -->
+	<h2>elの要素を特に指定しないと、templateの要素にdivタグがラップされる件</h2>
+	<p>上記リストテンプレートをappendする際に、elを特に指定していないと、下記ようにappendされます。</p>
+	<code>
+		<span class="fileName">index.html</span>
+		&lt;ul id="listWrap"&gt;<br>
+		　	&lt;div&gt;&lt;li&gt;...&lt;/li&gt;&lt;/div&gt;<br>
+		　	&lt;div&gt;&lt;li&gt;...&lt;/li&gt;&lt;/div&gt;<br>
+		　	&lt;div&gt;&lt;li&gt;...&lt;/li&gt;&lt;/div&gt;<br>
+		　	&lt;div&gt;&lt;li&gt;...&lt;/li&gt;&lt;/div&gt;<br>
+		&lt;/ul&gt;<br>
+	</code>
+	<p>だのでテンプレートからliを削除して、tagNameにliをしてします。</p>
+	<code>
+		<span class="fileName">challengeView.js</span>
+		var ListView = Backbone.View.extend({
+		　tagName:"li",
+	</code>
+
+
+
+
+
+
+	<script src="/lib/require.js" data-main="_js/main.js"></script>
+
+</body>
+</html>

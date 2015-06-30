@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="utf-8">
+	<title>challengePage</title>
+	<link rel="stylesheet" href="../_css/common.css">
+	<style type="text/css">
+	.itemName{
+		display: inline-block;
+		width:200px;
+		padding:30px 0;
+	}
+	</style>
+</head>
+<body>
+
+
+	<h1>challengePage</h1>
+
+
+	<!-- コンテンツエリア -->
+	<h2>コンテンツ</h2>
+	<div id="btnWrap">
+		<a href="#/simplePage" class="btn">simplePage</a>
+		<a href="#/challengePage" class="btn">challengePage</a>
+	</div>
+
+	<div id="contents">
+
+	</div>
+
+	<h2>想定しているページ</h2>
+	<p>ボタンを一つだけ持つ複数のモデルがあり、ボタンをクリックすることで、１つのモデルだけ状態が変わる事を想定しています。</p>
+
+
+	<!-- ########################## -->
+	<h2>model.save</h2>
+	<p>1つのモデルを更新するときは、model.save()を使います</p>
+	<code>
+		<span class="fileName">challengeView.js</span>
+		this.model.save({"btnState":2},{<br>
+			　wait : true,<br>
+			　success : $.proxy(this.render, this),<br>
+			　error : function(model,res,options){<br>
+				　　console.log(options);<br>
+			　}<br>
+		})
+	</code>
+
+	<p>上記はモデルの「btnState」を「2」へ（受取済み）の変更をサーバーに通知しています。<br>
+	変更する値は「btnState」だけですが、変更予定のモデルが1つまるごと、jsonでサーバーに送られています。<br><br>
+	<span class="red">「wait:true」は必ず記載してください。</span><br>
+	これがあることで、<span class="red">サーバーからのレスポンスの後に</span>、モデルを更新します。<br>
+	通信エラー等、レスポンスが無いと、モデルは更新されません。
+	</p>
+
+
+	<!-- ########################## -->
+	<h2>listTemp</h2>
+	<p>リストのViewを更新するために、「listTemp.html」を用意しました。<br>
+	モデルが更新され再描画する際に、テンプレートがあると非常に便利です。</p>
+	<code>
+	<span class="fileName">challengeView.js</span>
+		render : function() {<br>
+			　this.$el.html(this.template({model:this.model.toJSON()}));<br>
+			　return this;<br>
+		},<br>
+		onFetch : function(collection, resp) {<br>
+			　$("#contents").append(this.render().el);<br>
+		},
+	</code>
+
+	<p>「render」を実行すれば、モデルをテンプレートに流し込み再描画する流れを一度に出来ます。<br>
+	テンプレート無しだと.innerTextとかで更新するしかないのですが、単に値を一つしか変更しない時は、あえてtemplateを使わないとも良い気がします。</p>
+	</p>
+
+
+	<!-- ########################## -->
+	<h2>初期json読み込みのtemplateの使い方とイベントの登録について</h2>
+	<p>今回はtemp02に全てのタグを入れました。（listTempの内容が含まれる）<br>
+	全てのタグをappnedしてから、存在している（domに追加された）タグに対してViewとModelを登録しています。</p>
+	<code>
+	<span class="fileName">challengeView.js</span>
+		var list = document.getElementById("listWrap").getElementsByTagName("li");<br>
+		listCollection = new ListCollection(resp.list);<br>
+		listCollection.each(function(model,index){<br>
+			　var listView = new ListView({<br>
+				　　model:model,<br>
+				　　el:list[index]<br>
+			　});<br>
+		});
+	</code>
+
+	<p>
+	この方法が正しいかどうか、わかりません。<br>
+	次のサンプル「02_02_challengePage」では、temp02にはlistTempの内容を含めないやり方を試しました。<br>
+	どちらが望ましいか、検討の余地ありです。
+	</p>
+
+
+	<script src="/lib/require.js" data-main="_js/main.js"></script>
+
+</body>
+</html>

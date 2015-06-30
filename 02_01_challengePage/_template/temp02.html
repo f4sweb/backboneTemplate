@@ -1,0 +1,10 @@
+
+<h3><%= model.title %></h3>
+<ul id="listWrap">
+	<% _.each(model.list, function(item) { %>
+	<li>
+		<span class="itemName"><%= item.listName %></span>
+		<span class="btn <%= item.btnState == 0 || item.btnState == 2 ? 'off' : '' %>"><%= item.btnState == 0 || item.btnState == 1 ? '受け取る' : "受け取り済み" %></span>
+	</li>
+	<% }) %>
+</ul>

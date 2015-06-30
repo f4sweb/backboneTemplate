@@ -1,0 +1,63 @@
+body{
+	padding:0px 40px 50px 40px ;
+}
+
+h1{
+
+}
+h2{
+	margin-top:30px;
+	border-bottom:1px solid #999;
+}
+#contents{
+	border:1px solid #333;
+	padding:20px;
+}
+.red{
+	color:#ff0000;
+	font-weight: bold;
+}
+.btn{
+	margin:0 20px 0 0;
+	width: 250px;
+	font-weight: bold;
+	line-height:1;
+	text-decoration: none;
+	padding: 10px 0px;
+	font-size:24px;
+	display: inline-block;
+	position: relative;
+	color: #fff;
+	text-align: center;
+	border: 4px solid #fff;
+	-webkit-box-sizing: border-box;
+	-webkit-tap-highlight-color: transparent;
+	-webkit-border-radius: 12px;
+	text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.8), -1px -1px 1px rgba(0, 0, 0, 0.8), -1px 1px 1px rgba(0, 0, 0, 0.8), 1px -1px 1px rgba(0, 0, 0, 0.8);
+	background: -webkit-gradient(linear, left top, left bottom, from(#ff69cb), color-stop(0.6, #eb1da3), color-stop(0.5, #bd0071), to(#ff7ad5));
+	-webkit-box-shadow: 0 0 4px black, inset 0 0 10px #750f75;
+}
+.btn.off{
+	background: -webkit-gradient(linear, left top, left bottom, from(#919191), color-stop(0.6, #8a8a8a), color-stop(0.5, #424242), to(#828282));
+	display: inline-block;
+	pointer-events: none;
+	border: 4px solid #d9d9d9;
+	-webkit-box-shadow: 0 0 4px black, inset 0 0 10px #2b2b2b;
+}
+code{
+	margin:30px 0;
+	position: relative;
+	display: block;
+	padding:30px 20px 20px 20px;
+	background: #eee;
+}
+code .fileName{
+	position: absolute;
+	left:0px;
+	top:0px;
+	background: #ccc;
+	padding:4px;
+}
+#btnWrap{
+	padding:0 0 30px 0;
+}

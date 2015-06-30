@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="utf-8">
+	<title>SimpleModel</title>
+	<link rel="stylesheet" href="../_css/common.css">
+</head>
+<body>
+
+
+	<h1>SimpleView</h1>
+
+	<p>ページ読み込みのみで、ユーザー操作が発生しないページを想定しています。<br><br>
+	特定のjsonを読み込んで、特定のテンプレートにレイアウトする以外の事をしないページ用に「simpleView.js」を作りました。<br>
+	動的に変わる要素は、jsonの読み込み先とテンプレートのみの想定で、startでurl,templateを渡しています。<br>
+	下記テストではページ01、ページ02共にsimpleViewを使いまわしており、それぞれのjson、それぞれのtemplateを使っています。
+
+	<code>
+	<span class="fileName">simpleView.js</span>
+	start : function(url,temp){<br>
+		　pageModel.url = url;<br>
+		　pageTemplate = temp;<br>
+		　<br>
+		　pageView = new PageView();<br>
+	},
+	</code>
+
+	</p>
+
+
+
+	<!-- コンテンツエリア -->
+
+	<div id="btnWrap">
+		<a href="#/page01" class="btn">ページ01</a>
+		<a href="#/page02" class="btn">ページ02</a>
+	</div>
+
+	<div id="contents">
+
+	</div>
+
+	<script src="/lib/require.js" data-main="_js/main.js"></script>
+
+</body>
+</html>

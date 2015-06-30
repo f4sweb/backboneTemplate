@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="utf-8">
+	<title>SimpleView</title>
+	<link rel="stylesheet" href="../_css/common.css">
+</head>
+<body>
+
+
+	<h1>simpleView</h1>
+	<h2>コンテンツ</h2>
+	<!-- コンテンツエリア -->
+
+	<div id="btnWrap">
+		<a href="#/page01" class="btn">ページ01</a>
+		<a href="#/page02" class="btn">ページ02</a>
+	</div>
+
+	<div id="contents">
+
+	</div>
+
+
+	<h2>想定しているページ</h2>
+	<p>ページ読み込みのみで、ユーザー操作が発生しないページを想定しています。<br><br>
+	特定のjsonを読み込んで、特定のテンプレートにレイアウトする以外の事をしないページ用に「simpleView.js」を作りました。<br>
+	動的に変わる要素は、jsonの読み込み先とテンプレートのみの想定で、startでurl,templateを渡しています。<br>
+	下記テストではページ01、ページ02共にsimpleViewを使いまわしており、それぞれのjson、それぞれのtemplateを使っています。</p>
+
+
+	<code>
+		<span class="fileName">simpleView.js</span>
+		start : function(url,temp){<br>
+			　pageModel.url = url;<br>
+			　pageTemplate = temp;<br>
+			　<br>
+			　pageView = new PageView();<br>
+		},
+	</code>
+
+	<h2>テンプレートへのモデルの流し込みについて</h2>
+	<p>テンプレートでjsonの値の分岐をするときに、jsonには存在しない値で分岐するとエラーになります。そんなもんねーって怒られます。</p>
+	<code>
+		<span class="fileName">template.html</span>
+		<% if(jsonName){  %> <br>
+			　&lt;p&gt;<%= jsonName %>&lt;/p&gt;<br>
+		<% }  %><br>
+	</code>
+
+	<p>jsonをオブジェクトに格納してやることで回避できます。</p>
+
+	<code>
+	<span class="fileName">simpleView.js</span>
+		<span>本来は下記</span><br>
+		this.$el.html(this.template(this.model.toJSON()));<br><br>
+
+		<span>エラー防止のために、オブジェクトに格納。</span><br>
+		this.$el.html(this.template({model:this.model.toJSON()}));<br>
+	</code>
+
+	<code>
+		<span class="fileName">template.html</span>
+		<% if(model.jsonName){  %><br>
+			　&lt;p&gt;<%= model.jsonName %>&lt;/p&gt;<br>
+		<% }  %>
+	</code>
+
+
+
+	<script src="/lib/require.js" data-main="_js/main.js"></script>
+
+</body>
+</html>
