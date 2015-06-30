@@ -6,7 +6,8 @@ define([
 	"common/ajaxControl",
 	"text!../_template/temp01.html",
 	"text!../_template/temp02.html",
-	"simplaeView"
+	"simplaeView",
+	"exchangeView"
 ], function (
 		_,
 		Backbone,
@@ -14,7 +15,8 @@ define([
 		ajaxControl,
 		page01Temp,
 		page02Temp,
-		simplaeView
+		simplaeView,
+		exchangeView
 	){
 	'use strict';
 
@@ -26,9 +28,9 @@ define([
 	var AppRouter = Backbone.Router.extend({
 
 		routes: {
-			"": 			"page01",
-			'page01(:query)': 	'page01',
-			'page02(:query)': 	'page02'
+			"": 			"simple",
+			'simple(:query)': 	'simple',
+			'exchange(:query)': 	'exchange'
 		},
 		//ルーティングの前
 		before: function () {
@@ -36,19 +38,21 @@ define([
 		},
 		//ルーティング終了
 		after: function () {
-			pageInstance.start(pageURL,pageTemp);
+			if(pageURL){
+				pageInstance.start(pageURL,pageTemp);
+			}else{
+				pageInstance.start();
+			}
 		},
 		//以下各ルーティング
-		page01: function () {
+		simple: function () {
 			pageURL = "_json/test.json";
 			pageTemp = page01Temp;
 			pageInstance = simplaeView;
 		},
-		page02: function () {
-			pageURL = "_json/test2.json";
-			pageTemp = page02Temp;
-
-			pageInstance = simplaeView;
+		exchange: function () {
+			pageURL = null;
+			pageInstance = exchangeView;
 		}
 	});
 	return AppRouter;
