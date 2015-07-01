@@ -54,8 +54,8 @@ define([
 			pageURL = null;
 			pageInstance = exchangeView;
 		}
+		
+
 	});
 	return AppRouter;
 });
-
-
