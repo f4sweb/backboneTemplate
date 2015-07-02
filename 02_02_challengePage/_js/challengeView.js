@@ -20,17 +20,23 @@ define([
 
 		tagName:"li",
 		template: _.template(listTemp),
+		events:{
+			"touchend .btn" : "save"
+		},
+		initialize : function(){
+			this.listenTo(this.model, "change", this.render);
+			//this.listenTo(listCollection, "change", this.changeCollection);
+		},
 		render : function() {
 			this.$el.html(this.template({model:this.model.toJSON()}));
 			return this;
 		},
-		onFetch : function(collection, resp) {
-			$("#contents").append(this.render().el);
+		changeCollection : function(){
+			console.log("changeCollection")
 		},
 		save : function(){
 			this.model.save({"btnState":2},{
 				wait : true,
-				success : $.proxy(this.render, this),
 				error : function(model,res,options){
 					console.log(options);
 				}

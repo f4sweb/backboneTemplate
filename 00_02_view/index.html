@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="utf-8">
+	<title>ViewとModel</title>
+	<link rel="stylesheet" href="../_css/common.css">
+</head>
+<body>
+
+
+	<h1>ViewとModel。単体ページ表示</h1>
+	<h2>コンテンツ</h2>
+
+	<div id="contents">
+
+	</div>
+
+
+	<h2>Model、urlとfetch</h2>
+	<p>fetchをする前に、Modelのurlを設定しておきます。</p>
+
+	<code>
+		<span class="fileName">simpleView.js</span>
+		var PageModel = Backbone.Model.extend({<br>
+		　	url:"_js/testJson.json"<br>
+		});
+	</code>
+
+	<p>urlが設定されておれば、fetchの際にそこを見に行きます。</p>
+
+	<code>
+		<span class="fileName">simpleView.js</span>
+		pageModel.fetch({<br>
+		　	type:"POST",<br>
+		　	success : $.proxy(this.onFetch, this)<br>
+		});
+	</code>
+
+	<p>これで単体のページは表示できたので、<br>後はこれを沢山作ってrouterで切り替えればいいじゃん！</p>
+
+
+
+
+
+	<script src="/lib/require.js" data-main="_js/main.js"></script>
+
+</body>
+</html>

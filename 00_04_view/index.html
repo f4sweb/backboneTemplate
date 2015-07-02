@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="utf-8">
+	<title>ViewとModel</title>
+	<link rel="stylesheet" href="../_css/common.css">
+</head>
+<body>
+
+
+	<h1>複数ページ切り替え、ViewとModel削除</h1>
+	<h2>コンテンツ</h2>
+	<!-- コンテンツエリア -->
+	<div id="btnWrap">
+		<a href="#/page01" class="btn">ページ01</a>
+		<a href="#/page02" class="btn">ページ02</a>
+		<a href="#/page03" class="btn">ページ03</a>
+	</div>
+
+	<div id="contents">
+
+	</div>
+
+
+	<h2>routerのカスタムとインスタンスの一元化</h2>
+	<p>routerイベントの前後に「before」「after」が実行されるように調節（<a href="http://danialk.github.io/blog/2013/06/08/backbone-tips-after-and-before-methods-for-router/">コピペ</a>）</p>
+
+	<code>
+		<span class="fileName">router.js</span>
+		Backbone.Router.prototype.before = function () {};<br>
+		Backbone.Router.prototype.after = function () {};<br>
+		....
+	</code>
+
+	<p>beforeでclear、afterでstartさせる</p>
+	<code>
+		<span class="fileName">router.js</span>
+		before : function(){<br>
+		　	if(instance) instance.remove();<br>
+		},<br>
+		after : function(){<br>
+		　	instance.start();<br>
+		},<br>
+		page01: function () {<br>
+		　	instance = new SimpleView();<br>
+		},<br>
+		page02: function () {<br>
+		　	instance = new SimpleView();<br>
+		},<br>
+		page03: function () {<br>
+		　	instance = new SimpleView();<br>
+		}
+	</code>
+
+	<p>viewの中も調節</p>
+	<code>
+		<span class="fileName">router.js</span>
+		before : function(){<br>
+		　	if(instance) instance.remove();<br>
+		},<br>
+		after : function(){<br>
+		　	instance.start();<br>
+		},<br>
+		page01: function () {<br>
+		　	instance = new SimpleView();<br>
+		},<br>
+		page02: function () {<br>
+		　	instance = new SimpleView();<br>
+		},<br>
+		page03: function () {<br>
+		　	instance = new SimpleView();<br>
+		}
+	</code>
+
+
+
+
+	<script src="/lib/require.js" data-main="_js/main.js"></script>
+
+</body>
+</html>

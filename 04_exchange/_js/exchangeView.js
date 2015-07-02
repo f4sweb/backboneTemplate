@@ -6,7 +6,7 @@ define([
 	"text!../_template/temp02.html"
 ], function ($,_,Backbone,listTemp,temp02) {
 
-
+	var hasItem;
 	//################################
 	//チャレンジボタンコレクションとビュー
 	//################################
@@ -20,17 +20,32 @@ define([
 
 		tagName:"li",
 		template: _.template(listTemp),
+		events:{
+			"touchend .btn":"touchHandler"
+		},
+		initialize : function(){
+			this.listenTo(this.model, "change", this.render);
+			this.listenTo(listCollection, "change", this.changeCollection);
+		},
+		touchHandler : function(e){
+			e.preventDefault();
+			var resultItemNum = pageModel.get("hasItem") - this.model.get("needNum")
+			//console.log(resultItemNum);
+			var resultChangeCount = this.model.get("changeCount") + 1;
+			this.save(resultChangeCount);
+		},
 		render : function() {
+
 			this.$el.html(this.template({model:this.model.toJSON()}));
 			return this;
 		},
-		onFetch : function(collection, resp) {
-			$("#contents").append(this.render().el);
+		changeCollection : function(){
+			console.log("changeCollection");
+
 		},
-		save : function(){
-			this.model.save({"btnState":2},{
+		save : function(resultChangeCount){
+			this.model.save({"changeCount":resultChangeCount},{
 				wait : true,
-				success : $.proxy(this.render, this),
 				error : function(model,res,options){
 					console.log(options);
 				}
@@ -77,6 +92,7 @@ define([
 			//フラグメントその２
 			var flgmntNode02 = document.createDocumentFragment();
 			listCollection.each(function(model,index){
+				model.set({"hasItem":resp.hasItem});
 				var listView = new ListView({
 					model:model
 				});
@@ -87,6 +103,9 @@ define([
 
 			//最後にコンテンツ追加
 			document.getElementById("contents").appendChild(flgmntNode01);
+
+			//数を覚えておこう
+			hasItem = pageModel.get("hasItem");
 		}
 	});
 	var pageView;

@@ -24,17 +24,17 @@ define([
 		events:{
 			"touchend .btn" : "save"
 		},
+		initialize : function(){
+			this.listenTo(this.model, "change", this.render);
+		},
 		render : function() {
 			this.$el.html(this.template({model:this.model.toJSON()}));
 			return this;
 		},
-		onFetch : function(collection, resp) {
-			$("#contents").append(this.render().el);
-		},
 		save : function(){
 			this.model.save({"btnState":2},{
 				wait : true,
-				success : $.proxy(this.render, this),
+				//success : $.proxy(this.render, this),
 				error : function(model,res,options){
 					console.log(options);
 				}

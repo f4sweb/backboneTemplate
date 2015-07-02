@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="utf-8">
+	<title>View</title>
+	<link rel="stylesheet" href="../_css/common.css">
+</head>
+<body>
+
+
+	<h1>色々最初に決めたこととか色々</h1>
+
+
+	<h2>コンテンツ</h2>
+
+	<div id="contents"></div>
+
+	<!-- #############################################  -->
+	<h2>色々最初に決めたこととか色々</h2>
+	<ul>
+		<li>１ページにつき、１モデル、１Viewを作る</li>
+		<li>イベントBasePageを作ってページごとにcontentsを切り替えることにする</li>
+		<li>ハッシュ以降はいつもの通りのイベントページ名にする（#/EventPokerTopとか）</li>
+		<li>templateはjsディレクトの並びに「template」ディレクトリを作り、更にイベントごとに階層を作る。テンプレートファイルは「◯◯Temp.html」とする</li>
+		<li>ローカルテスト用、サーバー屋さん共有用にjsonディレクトリを作りました。templateと同じ階層に。</li>
+		<li>r.jsの設定ファイルは空にして、アプリのビルド時に巻き込んでもらうようにしました。本物はtemplate、json、jsと同階層「requirejs-config」にいます。<br>
+		諸々藤井さんに助けて頂いて、<a href="http://192.168.1.206/projects/legion/wiki/AbountRequireJS">詳細はこちら</a><br>
+		上記設定によって、ローカルでr.jsのビルドをしなくてもよくなりました。</li>
+	</ul>
+
+	<!-- #############################################  -->
+	<h2>jsonのルール</h2>
+	<ul>
+		<li>エラーハンドリング用に「resultCode」「errorTxt」「errorLink」を必ず入れるようにしました。</li>
+		<li>jsonは後勝ちなので、同名の要素の最初を連携用の説明に使うことにしました</li>
+	</ul>
+
+	<code>
+		<span class="fileName">sample.json</span>
+		{<br>
+		　	"resultCode":"エラーハンドリング、success or error",<br>
+		　	"resultCode":"success",<br>
+		　	"errorTxt":"エラーの文言がはいります。",<br>
+		　	"errorLink":"エラーリンク"<br>
+		}
+	</code>
+
+	<!-- #############################################  -->
+	<h2>ルーターの設定</h2>
+	<p>最初はハッシュ以降、固定の名前でしたが</p>
+
+	<code>
+		<span class="fileName">router.js</span>
+		routes: {<br>
+		　	"": 		"page01",<br>
+		　	'page01': 	'page01'<br>
+		},<br>
+	</code>
+
+	<p>色々問題が発生して(:query)を追加しました。<br><a href="https://github.com/enja-oss/Backbone/blob/master/docs/Router.md">参考URL</a></p>
+	<code>
+		<span class="fileName">router.js</span>
+		routes: {<br>
+		　	"": 				"page01",<br>
+		　	'page01(:query)': 	'page01'<br>
+		},<br>
+	</code>
+
+
+
+
+
+
+	<script src="/lib/require.js" data-main="_js/main.js"></script>
+
+</body>
+</html>

@@ -1,22 +1,31 @@
 {
 	"title":"テンプレート02",
 	"info":"チャレンジページのような、シンプルに1アイテムだけ獲得するページです",
+	"hasItem":60,
 	"list":[
 		{
-			"listName":"受け取ったアイテム",
-			"btnState":"2"
+			"listName":"回数制限",
+			"changeLimit":10,
+			"changeCount":10,
+			"needNum":20
 		},
 		{
-			"listName":"受け取り可能アイテム",
-			"btnState":"1"
+			"listName":"可能",
+			"changeLimit":10,
+			"changeCount":3,
+			"needNum":30
 		},
 		{
-			"listName":"受け取れないアイテム",
-			"btnState":"0"
+			"listName":"アイテム不足",
+			"changeLimit":10,
+			"changeCount":3,
+			"needNum":100
 		},
 		{
-			"listName":"受け取れないアイテム",
-			"btnState":"0"
+			"listName":"可能",
+			"changeLimit":10,
+			"changeCount":9,
+			"needNum":60
 		}
 	]
 }

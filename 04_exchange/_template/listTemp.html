@@ -1,7 +1,21 @@
 
+	<span class="itemName" style="color:blue;"><%= model.listName %></span>
+	<p>必要枚数：<span class="needNum"><%= model.needNum %></span></p>
+	<p>交換制限：<span class="changeLimit"><%= model.changeLimit %></span></p>
+	<p>交換回数：<span class="changeCount"><%= model.changeCount %></span></p>
 
-
-	<span class="itemName"><%= model.listName %></span>
-	<span class="btn <%= model.btnState == 0 || model.btnState == 2 ? 'off' : '' %>"><%= model.btnState == 0 || model.btnState == 1 ? '受け取る' : "受け取り済み" %></span>
-
-
+	<!--
+	0 	アイテムが足りない
+	1 	受け取れる
+	2 	交換制限にひっかかってます
+	-->
+	<%
+		var btnState = 0;
+		if(model.needNum > model.hasItem){
+			btnState = 0;
+		}
+		if(model.changeLimit >= changeCount.hasItem){
+			btnState = 2;
+		}
+	%>
+	<span class="btn <%= model.btnState == 0 || model.btnState == 2 ? 'off' : '' %>">受け取る</span>

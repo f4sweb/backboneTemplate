@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="utf-8">
+	<title>ViewとModel</title>
+	<link rel="stylesheet" href="../_css/common.css">
+</head>
+<body>
+
+
+	<h1>複数ページ切り替え</h1>
+	<h2>コンテンツ</h2>
+	<!-- コンテンツエリア -->
+	<div id="btnWrap">
+		<a href="#/page01" class="btn">ページ01</a>
+		<a href="#/page02" class="btn">ページ02</a>
+		<a href="#/page03" class="btn">ページ03</a>
+	</div>
+
+	<div id="contents">
+
+	</div>
+
+
+	<h2>メモリ管理がやばそうじゃん</h2>
+	<p>Viewのインスタンスを生成し続けると、htmlのDomを消したとしてもviewとmodelはメモリに残り続ける。<br>
+	とすると下記のrouterが問題ありそう。</p>
+
+	<code>
+		<span class="fileName">router.js</span>
+		page01: function () {<br>
+		　	new SimpleView();<br>
+		},<br>
+		page02: function () {<br>
+		　	new SimpleView();<br>
+		},<br>
+		page03: function () {<br>
+		　	new SimpleView();<br>
+		}
+	</code>
+
+	<p>インスタンスを作る前に、前に作ったViewとModelを削除する必要がある。<br>
+	たとえば、
+	</p>
+
+	<code>
+		<span class="fileName">router.js</span>
+		page01: function () {<br>
+		　	instanse.clear();<br>
+		　	instanse.start();<br>
+		}
+	</code>
+
+
+
+
+	<script src="/lib/require.js" data-main="_js/main.js"></script>
+
+</body>
+</html>
