@@ -42,18 +42,52 @@
 
 	<h2>想定しているページ</h2>
 	<p>イベントの交換所を想定してます。<br>
-	交換制限があり、一つ交換すると、使用したアイテムが減り、全てのボタンアクティブに影響を与えるページをイメージしています。</p>
+	それぞれに「必要チケット数」、「交換制限」、「交換回数」があり、<br>
+	一つ交換すると、所持チケットが減り、全ての交換ボタンのアクティブに影響を与えるようなページを想定しています。</p>
 
-
+	<p>交換アイテムのjsonは下記のようにしました。</p>
 	<code>
-		<span class="fileName">simpleView.js</span>
-		start : function(url,temp){<br>
-			　pageModel.url = url;<br>
-			　pageTemplate = temp;<br>
-			　<br>
-			　pageView = new PageView();<br>
+		<span class="fileName">test2.json</span>
+		{<br>
+		　	"listName":"交換するアイテムたち",<br>
+		　	"changeLimit":10,<br>
+		　	"changeCount":10,<br>
+		　	"needNum":20<br>
 		},
 	</code>
+
+	<p>ボタン部分のテンプレートは下記のようにしました。</p>
+	<code>
+		<span class="fileName">listTemp.html</span>
+		<% <br>
+		var btnState = 1;<br>
+		//チケット不足と交換制限時は受け取れない<br>
+		if(model.needNum > model.hasTicket || model.changeCount >= model.changeLimit){<br>
+		　	btnState = 0;<br>
+		}<br>
+		%><br>
+		&lt;span class="btn <%= btnState == 0 ? 'off' : '' %>"&gt;受け取る&lt;/span&gt;
+	</code>
+
+
+
+	<p>交換するアイテムのモデル（json）はhasTicketを持っていないのですが<br>
+		上記テンプレートでは状態分岐に使いたいので<br>
+		下記のように無理やりモデルにぶち込みました<br>
+	</p>
+	<code>
+		<span class="fileName">exchangeView.js</span>
+		model.set({"hasTicket":resp.hasTicket});<br>
+		var listView = new ListView({<br>
+		　	model:model<br>
+		})
+	</code>
+
+
+	<p>結果的に、pageModelに組み込まれたhasTicketは更新せず、各アイテムに無理やり組み込んだhasTicketを手動で更新しています。<br>
+	表示されているチケット数もViewとして扱わず、innerTextで変更してます。<br>
+	こんなんで良いのかと言われれば、全然わかりません。
+	</p>
 
 	<script src="/lib/require.js" data-main="_js/main.js"></script>
 

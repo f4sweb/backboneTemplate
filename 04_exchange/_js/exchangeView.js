@@ -6,13 +6,14 @@ define([
 	"text!../_template/temp02.html"
 ], function ($,_,Backbone,listTemp,temp02) {
 
-	var hasItem;
+	//使用アイテム保存用
+	var useItemNum;
 	//################################
 	//チャレンジボタンコレクションとビュー
 	//################################
 	var ListCollection = Backbone.Collection.extend({
 		url:"./_json/listUpdate.json"
-	})
+	});
 	var listCollection;
 
 
@@ -24,32 +25,43 @@ define([
 			"touchend .btn":"touchHandler"
 		},
 		initialize : function(){
-			this.listenTo(this.model, "change", this.render);
-			this.listenTo(listCollection, "change", this.changeCollection);
+			//this.listenTo(this.model, "change", this.render);
+
+			//コレクションのonSaveを取得
+			this.listenTo(listCollection, "onSave", this.onSave);
 		},
 		touchHandler : function(e){
 			e.preventDefault();
-			var resultItemNum = pageModel.get("hasItem") - this.model.get("needNum")
-			//console.log(resultItemNum);
+			var resultItemNum = pageModel.get("hasTicket") - this.model.get("needNum");
 			var resultChangeCount = this.model.get("changeCount") + 1;
+			useItemNum = this.model.get("needNum");
 			this.save(resultChangeCount);
 		},
 		render : function() {
-
 			this.$el.html(this.template({model:this.model.toJSON()}));
 			return this;
 		},
-		changeCollection : function(){
-			console.log("changeCollection");
+		onSave : function(){
+			//所持チケット更新
+			var resultItemNum = this.model.get("hasTicket") - useItemNum;
+			this.model.set({"hasTicket":resultItemNum});
 
+			//レンダリング
+			this.render();
 		},
 		save : function(resultChangeCount){
 			this.model.save({"changeCount":resultChangeCount},{
 				wait : true,
+				success : function(){
+					//コレクションにカスタムイベント発火
+					listCollection.trigger("onSave");
+					//所持数更新
+					document.getElementById("hasTicket").innerText = pageModel.get("hasTicket") - useItemNum;
+				},
 				error : function(model,res,options){
 					console.log(options);
 				}
-			})
+			});
 		}
 	});
 
@@ -77,7 +89,7 @@ define([
 				error : function(model,res,options){
 					console.log(options);
 				}
-			})
+			});
 		},
 		render : function() {
 			this.$el.html(this.template({model:this.model.toJSON()}));
@@ -92,7 +104,7 @@ define([
 			//フラグメントその２
 			var flgmntNode02 = document.createDocumentFragment();
 			listCollection.each(function(model,index){
-				model.set({"hasItem":resp.hasItem});
+				model.set({"hasTicket":resp.hasTicket});
 				var listView = new ListView({
 					model:model
 				});
@@ -103,13 +115,9 @@ define([
 
 			//最後にコンテンツ追加
 			document.getElementById("contents").appendChild(flgmntNode01);
-
-			//数を覚えておこう
-			hasItem = pageModel.get("hasItem");
 		}
 	});
 	var pageView;
-
 
 
 	return {
