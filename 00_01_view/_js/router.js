@@ -6,10 +6,8 @@ define([
 ], function (
 		_,
 		Backbone,
-		simpleView
-	){
-	'use strict';
-
+		SimpleView
+){
 
 	var AppRouter = Backbone.Router.extend({
 		routes: {
@@ -17,8 +15,9 @@ define([
 			'page01(:query)': 	'page01'
 		},
 		page01: function () {
-			new simpleView();
+			new SimpleView();
 		}
 	});
 	return AppRouter;
+	
 });

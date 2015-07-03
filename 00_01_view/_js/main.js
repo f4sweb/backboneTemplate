@@ -21,7 +21,7 @@ require.config({
 	paths: {
 		jquery: '/lib/jquery',
 		underscore: '/lib/underscore',
-		backbone: '/lib//backbone',
+		backbone: '/lib/backbone',
 		backboneLocalstorage: '/lib/backbone.localStorage',
 		text: '/lib/text'
 	}
@@ -31,6 +31,8 @@ require([
 	'backbone',
 	'router'
 ], function (Backbone,Router) {
+
 	new Router();
 	Backbone.history.start();
+
 });

@@ -14,7 +14,7 @@ define([
 	//################################
 	var ListCollection = Backbone.Collection.extend({
 		url:"./_json/listUpdate.json"
-	})
+	});
 	var listCollection;
 
 
@@ -38,9 +38,9 @@ define([
 				error : function(model,res,options){
 					console.log(options);
 				}
-			})
+			});
 		}
-	})
+	});
 
 
 
@@ -67,7 +67,7 @@ define([
 				error : function(model,res,options){
 					console.log(options);
 				}
-			})
+			});
 		},
 		render : function() {
 			this.$el.html(this.template({model:this.model.toJSON()}));

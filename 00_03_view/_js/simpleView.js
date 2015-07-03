@@ -27,9 +27,7 @@ define([
 
 		},
 		onFetch : function(){
-			$("#contents").append(this.template())
-
-			console.log(this)
+			$("#contents").append(this.template());
 		}
 	});
 	return PageView;
