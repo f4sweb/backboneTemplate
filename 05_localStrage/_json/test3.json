@@ -1,0 +1,25 @@
+{
+	"title":"テンプレート03",
+	"info":"交換所０２",
+	"hasTicket":30,
+	"list":[
+		{
+			"listName":"交換するアイテムたち",
+			"changeLimit":10,
+			"changeCount":8,
+			"needNum":20
+		},
+		{
+			"listName":"交換するアイテムたち",
+			"changeLimit":10,
+			"changeCount":3,
+			"needNum":30
+		},
+		{
+			"listName":"交換するアイテムたち",
+			"changeLimit":10,
+			"changeCount":3,
+			"needNum":100
+		}
+	]
+}

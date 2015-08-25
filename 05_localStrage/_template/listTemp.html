@@ -1,0 +1,14 @@
+
+	<span class="itemName" style="color:blue;"><%= model.listName %></span>
+	<p>必要チケット枚数：<span class="needNum"><%= model.needNum %></span></p>
+	<p>交換制限：<span class="changeLimit"><%= model.changeLimit %></span></p>
+	<p>交換回数：<span class="changeCount"><%= model.changeCount %></span></p>
+
+	<%
+		var btnState = 1;
+		//チケット不足と交換制限時は受け取れない
+		if(model.needNum > model.hasTicket || model.changeCount >= model.changeLimit){
+			btnState = 0;
+		}
+	%>
+	<span class="btn <%= btnState == 0 ? 'off' : '' %>">受け取る</span>

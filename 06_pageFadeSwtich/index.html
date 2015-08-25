@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="utf-8">
+	<title>SimpleModel</title>
+	<link rel="stylesheet" href="../_css/common.css">
+	<style type="text/css">
+	.itemName{
+		display: inline-block;
+		width:200px;
+		padding:30px 0 0 0;
+	}
+	li{
+		border-bottom:1px solid #333;
+		position: relative;
+	}
+	li .btn{
+		position: absolute;
+		left:300px;
+		bottom:10px;
+	}
+	li p{
+		padding:0px;
+		margin:0px;
+	}
+	</style>
+</head>
+<body>
+
+
+	<h1>ダミーで読み込んだJsonをlocalStrageに保存し、ローカルで動く環境を作る</h1>
+
+	<div id="btnWrap">
+		<a href="#/simple" class="btn">シンプルページ</a>
+		<a href="#/exchange" class="btn">交換所</a>
+	</div>
+
+	<div id="contents">
+
+	</div>
+
+
+	<h2>想定しているページ</h2>
+	<p>イベントの交換所を想定してます。<br>
+	それぞれに「必要チケット数」、「交換制限」、「交換回数」があり、<br>
+	一つ交換すると、所持チケットが減り、全ての交換ボタンのアクティブに影響を与えるようなページを想定しています。</p>
+
+	<p>交換アイテムのjsonは下記のようにしました。</p>
+	<code>
+		<span class="fileName">test2.json</span>
+		{<br>
+		　	"listName":"交換するアイテムたち",<br>
+		　	"changeLimit":10,<br>
+		　	"changeCount":10,<br>
+		　	"needNum":20<br>
+		},
+	</code>
+
+	<script src="/lib/require.js" data-main="_js/main.js"></script>
+
+</body>
+</html>

@@ -6,7 +6,7 @@ define([
 	"common/ajaxControl",
 	"text!../_template/temp01.html",
 	"text!../_template/temp02.html",
-	"simpleView",
+	"simplaeView",
 	"exchangeView"
 ], function (
 		_,
@@ -15,7 +15,7 @@ define([
 		ajaxControl,
 		page01Temp,
 		page02Temp,
-		simpleView,
+		simplaeView,
 		exchangeView
 	){
 	'use strict';
@@ -30,12 +30,6 @@ define([
 		routes: {
 			"": 			"simple",
 			'simple(:query)': 	'simple',
-			// 'simple(:query)': 	function(){
-			// 	pageURL = "_json/test.json";
-			// 	pageTemp = page01Temp;
-			// 	pageInstance = simpleView;
-			// 	console.log("これがいけるなら");
-			// },
 			'exchange(:query)': 	'exchange'
 		},
 		//ルーティングの前
@@ -54,13 +48,13 @@ define([
 		simple: function () {
 			pageURL = "_json/test.json";
 			pageTemp = page01Temp;
-			pageInstance = simpleView;
+			pageInstance = simplaeView;
 		},
 		exchange: function () {
 			pageURL = null;
 			pageInstance = exchangeView;
 		}
-
+		
 
 	});
 	return AppRouter;
